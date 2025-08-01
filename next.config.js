@@ -10,7 +10,6 @@ const nextConfig = {
   experimental: {
     outputFileTracingRoot: path.join(__dirname, '../'),
     serverComponentsExternalPackages: ['@prisma/client', '@google-cloud/documentai'],
-    // Remove this line: staticPageGenerationTimeout: 0,
   },
   
   eslint: {
@@ -20,6 +19,10 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+
+  // Add this to skip static generation completely
+  trailingSlash: false,
+  skipTrailingSlashRedirect: true,
   
   images: { 
     unoptimized: true,
