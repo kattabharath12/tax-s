@@ -1,4 +1,4 @@
-// Update your next.config.js to completely disable static optimization
+// Update your next.config.js for App Router compatibility
 
 const path = require('path');
 
@@ -12,11 +12,8 @@ const nextConfig = {
   experimental: {
     outputFileTracingRoot: path.join(__dirname, '../'),
     serverComponentsExternalPackages: ['@prisma/client', '@google-cloud/documentai'],
-  },
-  
-  // Completely disable static optimization
-  exportPathMap: async function() {
-    return {};
+    // Disable static generation for app router
+    staticPageGenerationTimeout: 0,
   },
   
   eslint: {
@@ -57,10 +54,21 @@ const nextConfig = {
   },
 
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    // Prevent Prisma from being bundled on the client side
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        fs: false,
+        net: false,
+        tls: false,
+      };
+    }
+
     if (isServer) {
       config.externals = config.externals || [];
       config.externals.push({
         '@google-cloud/documentai': '@google-cloud/documentai',
+        '@prisma/client': '@prisma/client',
       });
     }
 
