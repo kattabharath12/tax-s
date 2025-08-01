@@ -2,7 +2,6 @@
   "name": "taxgrok-ai",
   "version": "1.0.0",
   "private": true,
-  {
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",
@@ -17,8 +16,7 @@
     "db:seed": "tsx --require dotenv/config scripts/seed.ts",
     "db:reset": "prisma migrate reset",
     "db:studio": "prisma studio"
-  }
-}
+  },
   "dependencies": {
     "@floating-ui/react": "0.26.0",
     "@google-cloud/documentai": "^9.3.0",
