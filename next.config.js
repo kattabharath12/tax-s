@@ -1,7 +1,5 @@
 // Update your next.config.js for App Router compatibility
-
 const path = require('path');
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   distDir: process.env.NEXT_DIST_DIR || '.next',
@@ -12,8 +10,7 @@ const nextConfig = {
   experimental: {
     outputFileTracingRoot: path.join(__dirname, '../'),
     serverComponentsExternalPackages: ['@prisma/client', '@google-cloud/documentai'],
-    // Disable static generation for app router
-    staticPageGenerationTimeout: 0,
+    // Remove this line: staticPageGenerationTimeout: 0,
   },
   
   eslint: {
@@ -47,12 +44,10 @@ const nextConfig = {
   publicRuntimeConfig: {
     maxFileSize: process.env.MAX_FILE_SIZE || '10485760'
   },
-
   env: {
     GOOGLE_CLOUD_PROJECT_ID: process.env.GOOGLE_CLOUD_PROJECT_ID,
     GOOGLE_DOCUMENT_AI_LOCATION: process.env.GOOGLE_DOCUMENT_AI_LOCATION,
   },
-
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     // Prevent Prisma from being bundled on the client side
     if (!isServer) {
@@ -63,7 +58,6 @@ const nextConfig = {
         tls: false,
       };
     }
-
     if (isServer) {
       config.externals = config.externals || [];
       config.externals.push({
@@ -71,15 +65,12 @@ const nextConfig = {
         '@prisma/client': '@prisma/client',
       });
     }
-
     config.resolve.alias = {
       ...config.resolve.alias,
       '@': path.resolve(__dirname),
     };
-
     return config;
   },
-
   async headers() {
     return [
       {
@@ -102,5 +93,4 @@ const nextConfig = {
     ];
   },
 };
-
 module.exports = nextConfig;
