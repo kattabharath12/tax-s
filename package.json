@@ -9,7 +9,7 @@
     "lint": "next lint",
     "postinstall": "prisma generate",
     "railway:build": "echo 'Skipping build - will build at runtime' && prisma generate",
-    "railway:start": "npx prisma db push --accept-data-loss && prisma generate && next build --no-lint && next start",
+    "railway:start": "npx prisma db push --accept-data-loss && npx prisma generate && cp -r ./prisma/node_modules/@prisma/client ./node_modules/@prisma/client 2>/dev/null || true && sleep 3 && next build --no-lint && next start",
     "db:migrate": "prisma migrate deploy",
     "db:push": "prisma db push",
     "db:seed": "tsx --require dotenv/config scripts/seed.ts",
