@@ -1,5 +1,5 @@
 # nixpacks.toml
-# Override Railway's default behavior
+# Simple Railway configuration without problematic caching
 
 [phases.setup]
 nixPkgs = ['nodejs_18', 'npm-9_x']
@@ -10,8 +10,12 @@ cmds = ['npm install --legacy-peer-deps --production=false']
 [phases.build]
 cmds = [
     'npx prisma generate',
-    'npm run build'
+    'npx next build'
 ]
 
 [start]
 cmd = 'npm start'
+
+# Disable problematic build caching
+[variables]
+NIXPACKS_NO_CACHE = "1"
